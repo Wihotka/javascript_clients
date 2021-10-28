@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клиенты</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/index.js" defer></script>
+</head>
+<body class="body">
+    <header class="search">
+        <div class="search__content">
+            <a href="#" class="search__logo">
+                <svg class="search__logo-icon">
+                    <use xlink:href="/sprite.svg#logo-icon"></use>
+                </svg>
+            </a>
+            <form class="search__form">
+                <input type="text" placeholder="Введите запрос" class="search__input">
+                <div class="search__auto-completion">
+                    <ul class="search__auto-list"></ul>
+                </div>
+            </form>
+        </div>
+    </header>
+    <main class="clients">
+        <h1 class="visually-hidden">Клиенты</h1>
+        <h2 class="clients__heading">Клиенты</h2>
+        <div class="clients__table preload">
+            <div class="preloader" id="table-preloader">
+                <div class="loader"></div>
+            </div>
+            <div class="clients__table-header clients__table-row">
+                <div class="clients__table-col">
+                    <button class="clients__table-sort" id="sort-id">
+                        <span>ID</span>
+                        <svg class="clients__arrow-icon">
+                            <use xlink:href="/sprite.svg#arrow-icon"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="clients__table-col">
+                    <button class="clients__table-sort" id="sort-name">
+                        <span>Фамилия Имя Отчество</span>
+                        <svg class="clients__arrow-icon">
+                            <use xlink:href="/sprite.svg#arrow-icon"></use>
+                        </svg>
+                        <span class="clients__alphabet-sort">А-Я</span>
+                    </button>
+                </div>
+                <div class="clients__table-col">
+                    <button class="clients__table-sort" id="sort-created">
+                        <span>Дата и время создания</span>
+                        <svg class="clients__arrow-icon">
+                            <use xlink:href="/sprite.svg#arrow-icon"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="clients__table-col">
+                    <button class="clients__table-sort" id="sort-updated">
+                        <span>Последние изменения</span>
+                        <svg class="clients__arrow-icon">
+                            <use xlink:href="/sprite.svg#arrow-icon"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="clients__table-col">
+                    <span>Контакты</span>
+                </div>
+                <div class="clients__table-col">
+                    <span>Действия</span>
+                </div>
+        </div>
+        </div>
+        <a href="#popup-add" class="popup-link clients__add-client add-client preload">
+            <svg class="clients__user-icon">
+                <use xlink:href="/sprite.svg#user-icon"></use>
+            </svg>
+            <span>Добавить клиента</span>
+        </a>
+    </main>
+    <div class="lock-padding popup preload" id="popup-add">
+        <div class="popup__body">
+            <div class="popup__content">
+                <div class="preloader preloader__background done" id="add-preloader-background"></div>
+                <a href="#" class="close-popup popup__close">
+                    <svg class="popup__close-icon">
+                        <use xlink:href="/sprite.svg#close-icon"></use>
+                    </svg>
+                </a>
+                <div class="popup__title">
+                    <h2 class="popup__heading">Новый клиент</h2>
+                    <span class="popup__id">ID: <span class="popup__new-id"></span></span>
+                </div>
+                <form action="/index.html" autocomplete="on" method="POST" class="popup__form">
+                    <div class="popup__form-item popup__form-item--create">
+                        <label for="#form-surname--create" class="popup__form-label empty">Фамилия<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-surname--create">
+                        <span class="popup__input-error" id="error-surname--create"></span>
+                    </div>
+                    <div class="popup__form-item popup__form-item--create">
+                        <label for="#form-name--create" class="popup__form-label empty">Имя<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-name--create">
+                        <span class="popup__input-error" id="error-name--create"></span>
+                    </div>
+                    <div class="popup__form-item popup__form-item--create">
+                        <label for="#form-last-name--create" class="popup__form-label empty">Отчество</label>
+                        <input type="text" class="popup__form-input" id="form-last-name--create">
+                    </div>
+                    <div class="popup__add-content">
+                        <div class="popup__contacts popup__contacts--create" id="popup-new-contacts">
+                            <div class="popup__contact popup__contact--create new-contact new-contact--create"></div>
+                        </div>
+                        <div class="popup__add-contact" id="add-contact--create">
+                            <svg class="popup__add-icon">
+                                <use xlink:href="/sprite.svg#add-icon"></use>
+                            </svg>
+                            <span class="popup__add-contact-text">Добавить контакт</span>
+                        </div>
+                        <span class="popup__max-contacts popup__max-contacts--create">Возможно добавить только 10 контактов</span>
+                    </div>
+                    <div class="popup__add-btn">
+                        <div class="preloader preloader__confirm done" id="add-confirm-preloader">
+                            <div class="loader loader__confirm done"></div>
+                        </div>
+                        <span>Добавить</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="lock-padding popup preload" id="popup-edit">
+        <div class="popup__body">
+            <div class="popup__content">
+                <div class="preloader" id="edit-preloader">
+                    <div class="loader"></div>
+                </div>
+                <div class="preloader preloader__background done" id="edit-preloader-background"></div>
+                <a href="#" class="close-popup popup__close">
+                    <svg class="popup__close-icon">
+                        <use xlink:href="/sprite.svg#close-icon"></use>
+                    </svg>
+                </a>
+                <div class="popup__title">
+                    <h2 class="popup__heading">Изменить данные</h2>
+                    <span class="popup__id">ID: <span class="popup__edit-id" id="popup-edit-id"></span></span>
+                </div>
+                <form action="/index.html" autocomplete="on" method="POST" class="popup__form popup__form-edit">
+                    <div class="popup__form-item popup__form-item--edit">
+                        <label for="#form-surname--edit" class="popup__form-label empty">Фамилия<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-surname--edit">
+                        <span class="popup__input-error" id="error-surname--edit"></span>
+                    </div>
+                    <div class="popup__form-item popup__form-item--edit">
+                        <label for="#form-name--edit" class="popup__form-label empty">Имя<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-name--edit">
+                        <span class="popup__input-error" id="error-name--edit"></span>
+                    </div>
+                    <div class="popup__form-item popup__form-item--edit">
+                        <label for="#form-last-name--edit" class="popup__form-label empty">Отчество</label>
+                        <input type="text" class="popup__form-input" id="form-last-name--edit">
+                    </div>
+                    <div class="popup__add-content">
+                        <div class="popup__contacts popup__contacts--edit" id="popup-edit-contacts">
+                            <div class="popup__contact popup__contact--edit new-contact new-contact--edit"></div>
+                        </div>
+                        <div class="popup__add-contact" id="add-contact--edit">
+                            <svg class="popup__add-icon">
+                                <use xlink:href="/sprite.svg#add-icon"></use>
+                            </svg>
+                            <span class="popup__add-contact-text">Добавить контакт</span>
+                        </div>
+                        <span class="popup__max-contacts popup__max-contacts--edit">Возможно добавить только 10 контактов</span>
+                    </div>
+                    <div class="popup__edit-btn">
+                        <div class="preloader preloader__confirm done" id="edit-confirm-preloader">
+                            <div class="loader loader__confirm done"></div>
+                        </div>
+                        <span>Изменить</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="lock-padding popup preload" id="popup-delete">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#" class="close-popup popup__close">
+                    <svg class="popup__close-icon">
+                        <use xlink:href="/sprite.svg#close-icon"></use>
+                    </svg>
+                </a>
+                <div class="popup__title popup__title-delete">
+                    <h2 class="popup__heading">Удалить клиента</h2>
+                    <span class="popup__text">Вы действительно хотите удалить данного клиента?</span>
+                    <div class="popup__buttons">
+                        <a href="#" class="close-popup popup__cancel">Отмена</a>
+                        <div class="popup__delete-btn">Удалить</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lock-padding popup preload" id="popup-open">
+        <div class="popup__body">
+            <div class="popup__content">
+                <div class="preloader" id="open-preloader">
+                    <div class="loader"></div>
+                </div>
+                <a href="#" class="close-popup popup__close">
+                    <svg class="popup__close-icon">
+                        <use xlink:href="/sprite.svg#close-icon"></use>
+                    </svg>
+                </a>
+                <div class="popup__title">
+                    <h2 class="popup__heading">Данные клиента</h2>
+                    <span class="popup__id">ID: <span class="popup__open-id" id="popup-open-id"></span></span>
+                </div>
+                <form action="/index.html" autocomplete="on" method="POST" class="popup__form popup__form-open">
+                    <div class="popup__form-item popup__form-item--open">
+                        <label for="#form-surname--open" class="popup__form-label empty">Фамилия<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-surname--open" disabled>
+                    </div>
+                    <div class="popup__form-item popup__form-item--open">
+                        <label for="#form-name--open" class="popup__form-label empty">Имя<span class="popup__form-star">*</span></label>
+                        <input type="text" class="popup__form-input" id="form-name--open" disabled>
+                    </div>
+                    <div class="popup__form-item popup__form-item--open">
+                        <label for="#form-last-name--open" class="popup__form-label empty">Отчество</label>
+                        <input type="text" class="popup__form-input" id="form-last-name--open" disabled>
+                    </div>
+                    <div class="popup__add-content">
+                        <div class="popup__contacts popup__contacts--open" id="popup-open-contacts">
+                            <div class="popup__contact popup__contact--open new-contact new-contact--open"></div>
+                        </div>
+                        <div class="popup__none-contact">
+                            <span class="popup__none-contact-text">Нет контактов</span>
+                        </div>
+                    </div>
+                    <div class="popup__open-link">
+                        <span>Ссылка: </span>
+                        <input type="text" class="popup__open-input" id="popup-open-link" disabled>
+                        <button type="button" class="popup__copy-btn">Копировать</button>
+                        <span class="popup__copy-msg">ссылка скопирована</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

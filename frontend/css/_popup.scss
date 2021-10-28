@@ -1,0 +1,695 @@
+.popup {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: $animTimer ease-in-out;
+
+    &.preload {
+        display: none;
+    }
+
+    &.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &.open &__content {
+        transform: scale(1);
+    }
+
+    &__body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 0 10px;
+    }
+
+    &__content {
+        position: relative;
+        width: 480px;
+        padding: 25px;
+        color: $main;
+        background-color: $white;
+        transform: scale(0);
+        transition: transform $animTimer ease-in-out;
+    }
+
+    &__close {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        color: $almostGray;
+        transition: color $shortAnimTimer ease-in-out;
+    }
+
+    &__close-icon {
+        width: 100%;
+        height: 100%;
+    }
+
+    &__title {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(min-content, max-content));
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    &__title-delete {
+        grid-template-columns: 100%;
+        grid-template-rows: repeat(3, minmax(min-content, max-content));
+        gap: 20px;
+    }
+
+    &__heading,
+    &__text,
+    &__buttons {
+        width: fit-content;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    &__heading {
+        font-size: 24px;
+    }
+
+    &__text {
+        width: 300px;
+        font-weight: normal;
+    }
+
+    &__delete-btn {
+        width: fit-content;
+        margin: 0 auto 10px;
+        padding: 10px 28px;
+        border: 2px solid $purple;
+        color: $white;
+        background-color: $purple;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color $shortAnimTimer ease-in-out, background-color $shortAnimTimer ease-in-out;
+    }
+
+    &__cancel {
+        width: fit-content;
+        margin: 0 auto;
+        border-bottom: 1px solid $main;
+        color: $main;
+        font-weight: normal;
+        transition: border-color $shortAnimTimer ease-in-out, color $shortAnimTimer ease-in-out;
+    }
+
+    &__id {
+        padding-top: 5px;
+        color: $darkGray;
+        font-weight: normal;
+        font-size: 12px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__form-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+
+    &__form-label {
+        cursor: text;
+        transform-origin: top left;
+        transform: translateY(0) scale(1);
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__form-label.empty {
+        transform: translateY(16px) scale(1.4);
+    }
+
+    &__form-input {
+        height: 25px;
+        border: 0;
+        border-bottom: 1px solid $gray;
+        font-weight: bold;
+        color: $main;
+        transition: border-color $shortAnimTimer ease-in-out;
+    }
+
+    &__form-input.input-error {
+        border-bottom: 1px solid $error;
+    }
+
+    &__form-label {
+        color: $darkGray;
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    &__form-star {
+        color: $purple;
+        font-weight: bold;
+    }
+
+    &__input-error {
+        position: absolute;
+        top: 25%;
+        right: 0;
+        width: fit-content;
+        height: fit-content;
+        color: $error;
+        font-size: 12px;
+    }
+
+    &__add-content {
+        position: relative;
+        margin-bottom: 25px;
+        padding: 8px 0 12px;
+    }
+
+    &__add-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -25px;
+        z-index: 0;
+        width: calc(100% + 50px);
+        height: 100%;
+        background-color: #f1f1f1;
+    }
+
+    &__contacts {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__contact {
+        position: relative;
+        display: grid;
+        grid-template-columns: 170px 1fr minmax(min-content, max-content);
+        align-items: center;
+        height: 40px;
+        margin-bottom: 15px;
+        opacity: 1;
+        transition: margin-bottom $animTimer ease-in-out, height $animTimer ease-in-out, opacity $animTimer ease-in-out;
+    }
+
+    &__contact-error {
+        position: absolute;
+        top: 1px;
+        left: 180px;
+        z-index: 1;
+        font-size: 12px;
+        color: $error;
+        opacity: 1;
+        visibility: visible;
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__contact-error.disabled {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &__contact--open {
+        grid-template-columns: 120px 1fr;
+    }
+
+    &__contact.new-contact {
+        height: 0;
+        margin-bottom: 0;
+        opacity: 0;
+    }
+
+    &__select-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 40px;
+        border: 2px solid $almostGray;
+        border-right: none;
+    }
+
+    &__select-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: #e0e0e0;
+    }
+
+    &__select {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 36px;
+        padding: 0 10px;
+        color: $darkGray;
+        font-size: 14px;
+        cursor: pointer;
+        transition: color $shortAnimTimer ease-in-out;
+    }
+
+    &__select::after {
+        content: '';
+        position: absolute;
+        right: 8px;
+        z-index: 1;
+        bottom: 16px;
+        width: 6px;
+        height: 6px;
+        border: 2px solid $purple;
+        border-top: none;
+        border-left: none;
+        transform: rotateZ(45deg);
+    }
+
+    &__select.active {
+        color: $purple;
+    }
+
+    &__select--open {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 36px;
+        padding: 0 10px;
+        color: $darkGray;
+        font-size: 14px;
+    }
+    
+    &__select-menu {
+        position: absolute;
+        top: 36px;
+        left: -2px;
+        z-index: 2;
+        width: calc(100% + 4px);
+        border: 2px solid #d5d5d5;
+        background-color: $white;
+        font-size: 14px;
+        cursor: pointer;
+        transform-origin: top;
+        transform: scaleY(0);
+        transition: transform $animTimer ease-in-out;
+    }
+
+    &__select-menu.open {
+        transform: scaleY(1);
+    }
+
+    &__select-item {
+        display: block;
+        width: 100%;
+        padding: 5px 10px;
+        color: $darkGray;
+        background-color: inherit;
+        transition: color $shortAnimTimer ease-in-out, background-color $shortAnimTimer ease-in-out;
+    }
+
+    &__input {
+        height: 40px;
+        padding: 0 10px;
+        border: 2px solid $almostGray;
+        background-color: $white;
+        color: $main;
+        font-weight: bold;
+        font-size: 14px;
+        transition: border-color $shortAnimTimer ease-in-out;
+    }
+
+    &__input.error {
+        border-color: $error;
+    }
+
+    &__delete-contact {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 6px;
+        border: 2px solid $almostGray;
+        border-left: none;
+        background-color: #e0e0e0;
+        cursor: pointer;
+    }
+
+    &__delete-icon {
+        width: 18px;
+        height: 18px;
+        color: #c0c0c0;
+        transition: color $shortAnimTimer ease-in-out;
+    }
+
+    &__add-contact {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transform: scaleY(1);
+        transition: transform $shortAnimTimer ease-in-out;
+    }
+
+    &__add-contact.disabled {
+        transform: scaleY(0);
+    }
+
+    &__none-contact {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    &__none-contact.disabled {
+        display: none;
+    }
+
+    &__add-icon {
+        position: relative;
+        z-index: 1;
+        width: 16px;
+        height: 16px;
+        color: $purple;
+        transition: transform $shortAnimTimer ease-in-out;
+    }
+
+    &__add-contact-text {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        width: fit-content;
+        padding-left: 8px;
+    }
+
+    &__none-contact-text {
+        position: relative;
+        z-index: 1;
+    }
+
+    &__max-contacts {
+        position: relative;
+        z-index: 1;
+        display: none;
+        width: 100%;
+        color: $error;
+        text-align: center;
+    }
+
+    &__max-contacts.active {
+        display: block;
+    }
+
+    &__add-btn,
+    &__edit-btn {
+        position: relative;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 12px 36px;
+        border: 2px solid $purple;
+        color: $white;
+        background-color: $purple;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__open-link {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(min-content, max-content) 1fr minmax(min-content, max-content);
+        gap: 4px;
+        align-items: center;
+        width: 100%;
+        color: $main;
+    }
+
+    &__open-input {
+        padding: 3px 6px;
+        border: none;
+        background-color: inherit;
+        font-size: 14px;
+        text-align: center;
+        text-decoration: underline;
+        cursor: text;
+    }
+
+    &__copy-btn {
+        padding: 4px 8px;
+        border: 2px solid $purple;
+        border-radius: 4px;
+        color: $white;
+        background-color: $purple;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: color $shortAnimTimer ease-in-out, background-color $shortAnimTimer ease-in-out, border-color $shortAnimTimer ease-in-out;
+    }
+
+    &__copy-msg {
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        left: 0;
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 2px 6px 3px;
+        border-radius: 3px;
+        color: $white;
+        background-color: $main;
+        font-size: 14px;
+        line-height: 14px;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    @keyframes copyAnim {
+        0% {
+            opacity: 0;
+            visibility: visible;
+        }
+
+        25% {
+            opacity: 1;
+        }
+
+        75% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    &__copy-msg.show {
+        animation: copyAnim 1500ms ease-in-out alternate;
+    }
+
+    &__form-input:focus {
+        border-bottom: 1px solid $purple;
+        outline: none;
+    }
+
+    &__select:focus {
+        border-color: $purple;
+        outline: none;
+    }
+
+    &__select:active {
+        color: #cab8ff;
+    }
+
+    &__input:focus {
+        outline: none;
+        caret-color: $purple;
+    }
+
+    &__delete-contact:focus {
+        border-color: $purple;
+        outline: none;
+    }
+
+    &__delete-contact:active &__delete-icon {
+        color: $purple;
+    }
+
+    &__add-contact:active &__add-icon {
+        transform: scale(1.25);
+    }
+
+    &__add-btn:active,
+    &__edit-btn:active {
+        color: $purple;
+        background-color: $white;
+    }
+
+    &__delete-btn:active {
+        color: $purple;
+        background-color: $white;
+    }
+
+    &__cancel:active {
+        border-color: $purple;
+        color: $purple;
+    }
+
+    &__copy-btn:active {
+        border-color: $darkPurple;
+        color: $darkPurple;
+        background-color: #e0e0e0;
+    }
+
+    @media (hover: hover) {
+        &__close:hover {
+            color: $purple;
+        }
+
+        &__close:active {
+            color: #cab8ff;
+        }
+
+        &__select:hover {
+            color: $purple;
+        }
+
+        &__select:active {
+            color: #cab8ff;
+        }
+
+        &__select-item:hover {
+            color: $main;
+            background-color: #f1f1f1;
+        }
+
+        &__select-item:active {
+            color: $almostGray;
+            background-color: #f1f1f1;
+        }
+
+        &__delete-contact:hover &__delete-icon,
+        &__delete-contact:active &__delete-icon {
+            color: $purple;
+        }
+
+        &__add-contact:hover {
+            transform: scale(1.05);
+        }
+
+        &__add-contact:active {
+            transform: scale(1);
+        }
+
+        &__add-contact:hover &__add-icon {
+            transform: scale(1.2);
+        }
+
+        &__add-contact:active &__add-icon {
+            transform: scale(1.25);
+        }
+
+        &__add-btn:hover,
+        &__add-btn:active,
+        &__edit-btn:hover,
+        &__edit-btn:active {
+            color: $purple;
+            background-color: $white;
+        }
+
+        &__delete-btn:hover,
+        &__delete-btn:active {
+            color: $purple;
+            background-color: $white;
+        }
+
+        &__cancel:active {
+            border-color: $purple;
+            color: $purple;
+        }
+
+        &__copy-btn:hover {
+            border-color: $purple;
+            color: $purple;
+            background-color: $white;
+        }
+
+        &__copy-btn:active {
+            border-color: $darkPurple;
+            color: $darkPurple;
+            background-color: #e0e0e0;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .popup {
+        &__heading {
+            font-size: 18px;
+        }
+
+        &__text {
+            width: 100%;
+        }
+
+        &__content {
+            width: 300px;
+            padding: 30px 15px;
+        }
+
+        &__contact {
+            grid-template-columns: 110px 126px minmax(min-content, max-content);
+        }
+
+        &__contact-error {
+            left: 120px;
+        }
+
+        &__select {
+            padding: 0 6px;
+        }
+
+        &__input {
+            padding: 0 6px;
+        }
+
+        &__add-content::before {
+            left: -15px;
+            width: calc(100% + 30px);
+        }
+    }
+}

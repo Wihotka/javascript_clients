@@ -1,0 +1,528 @@
+.clients {
+    background-color: $almostWhite;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+
+    &__heading {
+        width: 984px;
+        margin: 0 auto 26px;
+        font-weight: 700;
+        font-size: 24px;
+        color: $main;
+    }
+
+    &__table {
+        position: relative;
+        display: grid;
+        gap: 2px;
+        width: 1012px;
+        max-height: 320px;
+        margin: 0 auto 26px;
+        padding: 0 14px;
+        font-size: 12px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    &__table.preload {
+        max-height: 320px;
+        overflow-y: hidden;
+    }
+
+    &__table.stop-scrolling {
+        height: 100%;
+        overflow-y: hidden;
+    }
+
+    // кастомный скроллбар
+    &__table::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+    }
+
+    &__table::-webkit-scrollbar-track {
+        border-radius: 3px;
+        background: $white;
+    }
+
+    &__table::-webkit-scrollbar-thumb {
+        border: 1px solid $almostWhite;
+        border-radius: 3px;
+        background: $purple;
+    }
+
+    &__table::-webkit-scrollbar-button {
+        height: 22px;
+    }
+
+    &__table-row {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 52px 208px repeat(2, 145px) 120px 172px;
+        gap: 20px;
+        align-items: center;
+        padding: 16px 12px;
+        color: $main;
+        background-color: $white;
+        transform: scaleY(1);
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__table-row::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $almostWhite;
+    }
+
+    &__table-row.new-client {
+        height: 0;
+        margin-bottom: 0;
+        padding: 0;
+        opacity: 0;
+    }
+
+    &__table-row.add-client {
+        transform: scaleY(0);
+    }
+
+    &__table-row.filter {
+        color: $purple;
+        background-color: #d5c8ff;
+    }
+
+    &__table-row.filter &__table-name-link {
+        color: $purple;
+    }
+
+    &__table-header {
+        position: sticky;
+        top: 0;
+        z-index: 0;
+        color: $gray;
+        font-size: 12px;
+        line-height: 12px;
+        background-color: $almostWhite;
+        cursor: auto;
+    }
+
+    &__table-sort {
+        display: flex;
+        align-items: center;
+        border: none;
+        color: $gray;
+        background-color: inherit;
+        font-size: 12px;
+        line-height: 12px;
+        cursor: pointer;
+    }
+
+    &__table-sort.active &__arrow-icon,
+    &__table-sort.active &__alphabet-sort,
+    &__table-sort.active-reverse &__arrow-icon,
+    &__table-sort.active-reverse &__alphabet-sort {
+        color: $purple;
+    }
+
+    &__table-sort.active-reverse &__arrow-icon {
+        transform: rotateZ(180deg);
+    }
+
+    &__arrow-icon {
+        width: 8px;
+        height: 8px;
+        margin-left: 2px;
+        padding-top: 1px;
+        transition: color $shortAnimTimer ease-in-out, transform $shortAnimTimer ease-in-out;
+    }
+
+    &__alphabet-sort {
+        display: inline-block;
+        padding-top: 2px;
+        font-size: 10px;
+        line-height: 10px;
+        transition: color $shortAnimTimer ease-in-out;
+    }
+
+    &__table-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: inherit;
+    }
+
+    &__table-id {
+        position: relative;
+        cursor: pointer;
+    }
+
+    &__id {
+        position: relative;
+        color: $gray;
+        z-index: 1;
+    }
+
+    &__id-name {
+        position: absolute;
+        z-index: 0;
+        bottom: calc(100% + 7px);
+        left: -50%;
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        padding: 3px 6px;
+        border-radius: 3px;
+        color: $white;
+        background-color: $main;
+        visibility: hidden;
+        opacity: 0;
+        white-space: nowrap;
+        font-size: 12px;
+        transition: opacity $animTimer ease-in-out;
+    }
+
+    &__id-name::before {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        width: 100%;
+        height: 6px;
+        background-color: transparent;
+    }
+
+    &__id-name::after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        top: 100%;
+        border: 6px solid $white;
+        border-top: 6px solid $main;
+        background-color: $main;
+    }
+
+    &__id-name.hover-bottom {
+        top: 100%;
+        bottom: inherit;
+        padding: 2px 6px;
+    }
+
+    &__id-name.hover-bottom::before {
+        bottom: 0;
+        height: 0;
+    }
+
+    &__id-name.hover-bottom::after {
+        border: 0;
+    }
+
+    &__table-fullname {
+        position: relative;
+    }
+
+    &__table-name-link {
+        display: block;
+        color: $main;
+        background-color: inherit;
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__table-create-time,
+    &__table-edit-time {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(min-content, max-content));
+        gap: 8px;
+    }
+
+    &__table-time {
+        color: $gray;
+    }
+
+    &__table-contacts {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(min-content, max-content));
+        gap: 4px;
+    }
+
+    &__contact {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+    }
+
+    &__contact-name {
+        position: absolute;
+        z-index: 0;
+        bottom: calc(100% + 7px);
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        padding: 3px 6px;
+        border-radius: 3px;
+        color: $white;
+        background-color: $main;
+        visibility: hidden;
+        opacity: 0;
+        white-space: nowrap;
+        font-size: 12px;
+        transition: opacity $animTimer ease-in-out;
+    }
+
+    &__contact-name::before {
+        content: '';
+        position: absolute;
+        bottom: -18px;
+        width: 100%;
+        height: 18px;
+        background-color: transparent;
+    }
+
+    &__contact-name::after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        top: 100%;
+        border: 6px solid $white;
+        border-top: 6px solid $main;
+        background-color: $main;
+    }
+
+    &__contact-name.hover-bottom {
+        top: 100%;
+        bottom: inherit;
+        padding: 2px 6px;
+    }
+
+    &__contact-name.hover-bottom::before {
+        bottom: 0;
+        height: 0;
+    }
+
+    &__contact-name.hover-bottom::after {
+        border: 0;
+    }
+
+    &__contact-icon {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        color: $purple;
+        opacity: 0.75;
+        transition: opacity $shortAnimTimer ease-in-out;
+    }
+
+    &__table-actions {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    &__table-action {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(min-content, max-content));
+        gap: 3px;
+        align-items: center;
+        border: none;
+        color: $main;
+        background-color: inherit;
+        cursor: pointer;
+        transition: transform $shortAnimTimer ease-in-out;
+    }
+
+    &__edit-icon {
+        width: 16px;
+        height: 16px;
+        margin-top: 5px;
+        color: $purple;
+        opacity: 0.75;
+        transition: opacity $shortAnimTimer ease-in-out;
+    }
+
+    &__close-icon {
+        width: 13px;
+        height: 13px;
+        color: $error;
+        opacity: 0.75;
+        transition: opacity $shortAnimTimer ease-in-out;
+    }
+
+    &__add-client {
+        align-self: center;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(min-content, max-content));
+        gap: 8px;
+        align-items: center;
+        width: fit-content;
+        padding: 12px 24px;
+        border: 2px solid $purple;
+        color: $purple;
+        background-color: inherit;
+        opacity: 1;
+        font-weight: bold;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: $shortAnimTimer ease-in-out;
+    }
+
+    &__add-client.add-client,
+    &__add-client.preload {
+        opacity: 0;
+    }
+
+    &__user-icon {
+        width: 21px;
+        height: 21px;
+        margin-top: 2px;
+    }
+
+    &__table-sort:active &__arrow-icon,
+    &__table-sort:active &__alphabet-sort {
+        color: $purple;
+    }
+
+    &__table-row:hover {
+        background-color: #f9f6ff;
+    }
+
+    &__contact-icon:active {
+        opacity: 1;
+    }
+
+    &__table-action:active &__edit-icon,
+    &__table-action:active &__close-icon {
+        opacity: 1;
+    }
+
+    &__add-client:active {
+        color: $white;
+        background-color: $purple;
+    }
+
+    @media (hover: hover) {
+        &__table-id:hover &__id-name {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &__table-sort:hover &__arrow-icon,
+        &__table-sort:hover &__alphabet-sort,
+        &__table-sort:active &__arrow-icon,
+        &__table-sort:active &__alphabet-sort {
+            color: $purple;
+        }
+
+        &__contact:hover &__contact-name {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &__contact-icon:hover,
+        &__contact-icon:active {
+            opacity: 1;
+        }
+
+        &__table-action:hover {
+            transform: scale(1.05);
+        }
+
+        &__table-action:active {
+            transform: scale(1);
+        }
+
+        &__table-action:hover &__edit-icon,
+        &__table-action:hover &__close-icon,
+        &__table-action:active &__edit-icon,
+        &__table-action:active &__close-icon {
+            opacity: 1;
+        }
+
+        &__add-client:hover,
+        &__add-client:active {
+            color: $white;
+            background-color: $purple;
+        }
+    }
+}
+
+@media (max-width: 1023px) {
+    .clients {
+        &__heading {
+            width: 728px;
+        }
+
+        &__table {
+            width: 756px;
+        }
+
+        &__table-row {
+            grid-template-columns: 52px 185px repeat(2, 87px) 110px 70px;
+            gap: 18px;
+            padding: 12px 12px;
+        }
+
+        &__table-create-time,
+        &__table-edit-time {
+            grid-template-columns: minmax(min-content, max-content);
+            grid-template-rows: repeat(2, minmax(min-content, max-content));
+            gap: 0;
+        }
+
+        &__arrow-icon {
+            width: 16px;
+            margin-left: 0;
+        }
+
+        &__table-actions {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 5px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .clients {
+        &__heading {
+            width: fit-content;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        &__table {
+            width: 100%;
+            max-height: 344px;
+            overflow: auto;
+        }
+
+        &__table.preload {
+            height: 344px;
+            overflow: hidden;
+        }
+
+        &__id-name {
+            left: -40%;
+            padding: 2px 4px;
+        }
+
+        &__contact-name {
+            padding: 2px 4px;
+        }
+    }
+}

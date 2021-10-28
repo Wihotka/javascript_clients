@@ -1,0 +1,63 @@
+@import '_normalize.scss';
+@import '_fonts.scss';
+@import '_variables.scss';
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+// стили для автозаполняющихся инпутов (прозрачный фон, и кастомный цвет)
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #666; // задается вручную
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(0,174,255,0.04) 50%,rgba(255,255,255,0) 51%,rgba(0,174,255,0.03) 100%);  
+}
+
+.body {
+    background-color: #f5f5f5;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+.body.lock {
+    overflow: hidden;
+}
+
+.scroll-position {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.visually-hidden {
+	position: absolute;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0;
+	border: 0;
+	height: 1px; 
+	width: 1px; 
+	overflow: hidden;
+}
+
+@import '_preloader.scss';
+@import '_search.scss';
+@import '_clients.scss';
+@import '_popup.scss';
