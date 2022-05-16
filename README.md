@@ -1,5 +1,5 @@
 # Skillbox - Clientbase
-This project was made as a native javascript coursework for __Skillbox__ online school. You can check info below for more deatails.
+This project was made as a native javascript coursework for __Skillbox__ online school. You can check info below for more details.
 
 ## Instruments
 - Javascript (ES6)
@@ -16,7 +16,7 @@ You can:
 - __Sort__ users by __ID / Name / Created date / Updated date__.
 - __Add / Edit / Delete__ different __contacts__ in modal window.
 - __Search__ users by name in header input.
-- __Copy__ user's url in modal window by one click
+- __Copy__ user's URL in modal window by one click
 - __Open__ certain user's window by URL-adress
 
 All logic is in the `index.js`.
