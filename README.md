@@ -16,7 +16,8 @@ You can:
 - __Sort__ users by __ID / Name / Created date / Updated date__.
 - __Add / Edit / Delete__ different __contacts__ in modal window.
 - __Search__ users by name in header input.
-- __Copy__ user's URL in modal window by one click
-- __Open__ certain user's window by URL-adress
+- __Switch__ options using keybord's _up_ and _down_ arrows.
+- __Copy__ user's URL in modal window by one click.
+- __Open__ certain user's window by URL-adress.
 
 All logic is in the `index.js`.
